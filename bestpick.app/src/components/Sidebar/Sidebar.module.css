@@ -1,0 +1,40 @@
+.sidebar_conteudo {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 230px;
+    height: 100vh;
+
+    background: #080b09;
+    border-right: 1px solid #181c19;
+}
+
+.sidebar_header {
+    padding: 20px;
+    text-align: center;
+
+    & img {
+        width: 120px;
+    }
+}
+
+.logo {
+    width: 150px;
+    object-fit: contain;
+}
+
+.linha {
+    border: none;
+    border-top: 1px solid #1c211e;
+    margin-top: 20px;
+}
+
+.sidebar_corpo {
+    width: 100%;
+}
+
+.pagina_conteudo {
+    margin-left: 230px;
+    min-height: 100vh;
+}

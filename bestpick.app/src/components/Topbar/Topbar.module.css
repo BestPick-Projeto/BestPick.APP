@@ -1,0 +1,55 @@
+.topbar_conteudo {
+    height: 64px;
+    width: calc(100% - 230px);
+
+    position: fixed;
+    top: 0;
+    left: 230px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 24px;
+    box-sizing: border-box;
+
+    background: #080b09;
+    border-bottom: 1px solid #1a1f1b;
+
+    z-index: 100;
+}
+
+.topbar_conteudo h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.botao_deslogar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+
+    color: #9ca3af;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.botao_deslogar:hover {
+    background: rgba(34, 197, 94, 0.10);
+    color: #22c55e;
+}
