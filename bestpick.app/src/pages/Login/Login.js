@@ -25,6 +25,8 @@ export function Login() {
 
             localStorage.setItem("token", resposta.token);
 
+            await new Promise(resolve => setTimeout(resolve, 750));
+
             navigate('/home');
 
         } catch (error) {
