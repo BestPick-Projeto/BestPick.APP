@@ -1,0 +1,298 @@
+.pagina {
+    min-height: 100vh;
+
+    padding: 100px 35px 35px;
+
+    background: #050705;
+
+    color: white;
+
+    box-sizing: border-box;
+}
+
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+.cabecalho h1 {
+    margin: 0 0 7px;
+
+    color: #ffffff;
+
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.cabecalho p {
+    margin: 0;
+
+    color: #737b76;
+
+    font-size: 13px;
+}
+
+.total {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 14px;
+
+    background: #0d110e;
+
+    border: 1px solid #1b211c;
+    border-radius: 9px;
+
+    color: #9ca39e;
+
+    font-size: 12px;
+}
+
+.total svg {
+    color: #22c55e;
+
+    font-size: 18px;
+}
+
+.conteudo {
+    width: 100%;
+
+    background: #0d110e;
+
+    border: 1px solid #1b211c;
+    border-radius: 14px;
+
+    overflow: hidden;
+}
+
+.tabelaContainer {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.tabela {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.tabela thead {
+    background: #101511;
+}
+
+.tabela th {
+    padding: 16px 20px;
+
+    border-bottom: 1px solid #1b211c;
+
+    color: #727b75;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+.tabela td {
+    padding: 18px 20px;
+
+    border-bottom: 1px solid #171c18;
+
+    color: #a4aba6;
+
+    font-size: 13px;
+}
+
+.tabela tbody tr {
+    transition: 0.2s;
+}
+
+.tabela tbody tr:hover {
+    background: #101511;
+}
+
+.tabela tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.produto {
+    color: #ffffff;
+
+    font-weight: 500;
+}
+
+.valor {
+    color: #22c55e;
+
+    font-weight: 500;
+}
+
+.acoes {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.acoes button {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition: 0.2s;
+}
+
+.botaoVer {
+    border: 1px solid #263029;
+
+    color: #9da59f;
+}
+
+.botaoVer:hover {
+    background: rgba(34, 197, 94, 0.08);
+
+    border-color: #22c55e;
+
+    color: #22c55e;
+}
+
+.botaoExcluir {
+    border: 1px solid #2d2424;
+
+    color: #8d7474;
+}
+
+.botaoExcluir:hover {
+    background: rgba(239, 68, 68, 0.08);
+
+    border-color: #ef4444;
+
+    color: #ef4444;
+}
+
+.carregando {
+    min-height: 350px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+}
+
+.carregando p {
+    margin: 0;
+
+    color: #747c77;
+
+    font-size: 13px;
+}
+
+.loader {
+    width: 28px;
+    height: 28px;
+
+    border: 3px solid #1b211c;
+    border-top-color: #22c55e;
+    border-radius: 50%;
+
+    animation: girar 0.7s linear infinite;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.vazio {
+    min-height: 350px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.vazio svg {
+    margin-bottom: 15px;
+
+    color: #29312b;
+
+    font-size: 45px;
+}
+
+.vazio h2 {
+    margin: 0 0 7px;
+
+    color: #b5bbb7;
+
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.vazio p {
+    margin: 0;
+
+    color: #616963;
+
+    font-size: 12px;
+}
+
+.erro {
+    margin-bottom: 20px;
+
+    padding: 14px;
+
+    background: rgba(239, 68, 68, 0.08);
+
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 10px;
+
+    color: #f87171;
+
+    font-size: 13px;
+}
+
+@media (max-width: 800px) {
+
+    .pagina {
+        padding: 90px 15px 25px;
+    }
+
+    .cabecalho {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .tabela {
+        min-width: 750px;
+    }
+
+}/*////////////////////////////////////////////////////////////////////////////////////////+- nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn

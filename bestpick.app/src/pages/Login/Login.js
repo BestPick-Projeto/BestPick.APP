@@ -114,7 +114,12 @@ export function Login() {
 
                     <div className={styles.criarConta}>
                         <p>Ainda não tem uma conta?</p>
-                        <button type="button">Criar conta</button>
+                        <button
+                            type="button"
+                            onClick={() => navigate('/cadastro')}
+                        >
+                            Criar conta
+                        </button>
                     </div>
 
                 </form>
