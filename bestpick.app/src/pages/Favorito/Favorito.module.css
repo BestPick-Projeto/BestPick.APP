@@ -1,0 +1,87 @@
+.pagina {
+    min-height: 100vh;
+    padding: 100px 40px 40px;
+    background: #080808;
+    color: white;
+    box-sizing: border-box;
+}
+
+.cabecalho {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 30px;
+}
+
+.cabecalho h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.cabecalho p {
+    margin: 0 0 25px;
+    color: #a3a3a3;
+    font-size: 15px;
+}
+
+.abas {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid #262626;
+}
+
+.abas button {
+    padding: 12px 18px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: #888;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.abas button:hover {
+    color: white;
+}
+
+.abas .ativa {
+    color: #22c55e;
+    border-bottom-color: #22c55e;
+}
+
+.produtos {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.vazio {
+    margin: 70px auto 0;
+    text-align: center;
+    color: #888;
+    font-size: 15px;
+}
+
+@media (max-width: 700px) {
+    .pagina {
+        padding: 90px 20px 30px;
+    }
+
+    .cabecalho h1 {
+        font-size: 25px;
+    }
+
+    .abas {
+        width: 100%;
+    }
+
+    .abas button {
+        flex: 1;
+        padding: 12px 8px;
+    }
+}

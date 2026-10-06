@@ -30,7 +30,7 @@ export function Cadastro() {
 
         } catch (error) {
             console.error(error);
-            setErro('Não foi possível criar sua conta');
+            setErro(error.response?.data?.message || error.response?.data || "Não foi possível criar sua conta.");
         }
         finally {
             setCarregando(false);
@@ -64,6 +64,8 @@ export function Cadastro() {
                         <div className={styles.campo}>
 
                             <input
+                                minLength={2}
+                                maxLength={50}
                                 id="nome"
                                 type="text"
                                 placeholder="Nome"
@@ -79,6 +81,7 @@ export function Cadastro() {
                         <div className={styles.campo}>
 
                             <input
+                                maxLength={50}
                                 id="email"
                                 type="email"
                                 placeholder="E-mail"
@@ -94,6 +97,8 @@ export function Cadastro() {
                         <div className={styles.campo}>
 
                             <input
+                                minLength={6}
+                                maxLength={20}
                                 id="senha"
                                 type={mostrarSenha ? "text" : "password"}
                                 placeholder="Senha"

@@ -1,10 +1,14 @@
 import style from "./Home.module.css";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Topbar } from "../../components/Topbar/Topbar";
+import { CardProduto } from "../../components/CardProduto/CardProduto";
 import { useEffect, useRef, useState } from "react";
 import { MdSend } from "react-icons/md";
 import { jwtDecode } from "jwt-decode";
 import chatAPI from "../../services/chatAPI";
+import historicoAPI from "../../services/historicoAPI";
+import produtoAPI from "../../services/produtoAPI";
+import favoritoAPI from "../../services/favoritoAPI";
 
 export function Home() {
 
@@ -15,21 +19,17 @@ export function Home() {
     const [motivoCompra, setMotivoCompra] = useState(null);
     const [carregando, setCarregando] = useState(false);
     const [buscaCompleta, setBuscaCompleta] = useState(false);
+    const [aguardandoNovaBusca, setAguardandoNovaBusca] = useState(false);
+    const [favoritos, setFavoritos] = useState({});
 
     const finalMensagensRef = useRef(null);
     const textareaRef = useRef(null);
 
     const token = localStorage.getItem("token");
 
-    let nomeUsuario = "Usuário";
-
-    if (token) {
-        const dadosUsuario = jwtDecode(token);
-
-        nomeUsuario =
-            dadosUsuario["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
-            "Usuário";
-    }
+    const nomeUsuario = token
+        ? jwtDecode(token)["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || "Usuário"
+        : "Usuário";
 
     useEffect(() => {
         finalMensagensRef.current?.scrollIntoView({
@@ -37,13 +37,40 @@ export function Home() {
         });
     }, [mensagens, carregando]);
 
+    function adicionarMensagem(tipo, texto, produtos = []) {
+        setMensagens(atuais => [
+            ...atuais,
+            { tipo, texto, produtos }
+        ]);
+    }
+
     function handleAlterarMensagem(e) {
         setMensagem(e.target.value);
-
         e.target.style.height = "auto";
-
         e.target.style.height =
             Math.min(e.target.scrollHeight, 130) + "px";
+    }
+
+    async function salvarBusca(resposta) {
+        const historico = await historicoAPI.adicionarAsync(
+            resposta.produto,
+            resposta.valorCompra,
+            resposta.motivoCompra
+        );
+
+        return Promise.all(
+            resposta.produtos.map(async produto => {
+                const salvo = await produtoAPI.adicionarAsync(
+                    produto,
+                    historico.id
+                );
+
+                return {
+                    ...produto,
+                    id: salvo.id
+                };
+            })
+        );
     }
 
     async function handleEnviar(e) {
@@ -52,28 +79,18 @@ export function Home() {
         if (!mensagem.trim() || carregando || buscaCompleta)
             return;
 
-        const mensagemEnviada = mensagem;
+        const texto = mensagem.trim();
 
-        const novaMensagem = {
-            tipo: "usuario",
-            texto: mensagemEnviada
-        };
-
-        setMensagens(mensagensAtuais => [
-            ...mensagensAtuais,
-            novaMensagem
-        ]);
-
+        adicionarMensagem("usuario", texto);
         setMensagem("");
         setCarregando(true);
 
-        if (textareaRef.current) {
+        if (textareaRef.current)
             textareaRef.current.style.height = "auto";
-        }
 
         try {
             const resposta = await chatAPI.enviarMensagemAsync(
-                mensagemEnviada,
+                texto,
                 produto,
                 valorCompra,
                 motivoCompra
@@ -83,62 +100,90 @@ export function Home() {
             setValorCompra(resposta.valorCompra);
             setMotivoCompra(resposta.motivoCompra);
 
-            const mensagemBestPick = {
-                tipo: "bestpick",
-                texto: resposta.mensagem
-            };
+            let produtos = resposta.produtos || [];
 
-            setMensagens(mensagensAtuais => [
-                ...mensagensAtuais,
-                mensagemBestPick
-            ]);
+            if (resposta.completo && produtos.length > 0)
+                produtos = await salvarBusca(resposta);
+
+            adicionarMensagem(
+                "bestpick",
+                resposta.mensagem,
+                produtos
+            );
 
             if (resposta.completo) {
                 setBuscaCompleta(true);
+                setAguardandoNovaBusca(true);
 
-                const mensagemBuscando = {
-                    tipo: "bestpick",
-                    texto: "Buscando as melhores opções para você..."
-                };
-
-                setMensagens(mensagensAtuais => [
-                    ...mensagensAtuais,
-                    mensagemBuscando
-                ]);
+                setTimeout(() => {
+                    setAguardandoNovaBusca(false);
+                }, 5000);
             }
-        } catch (error) {
-            const mensagemErro = {
-                tipo: "bestpick",
-                texto: "Não foi possível enviar sua mensagem. Tente novamente."
-            };
 
-            setMensagens(mensagensAtuais => [
-                ...mensagensAtuais,
-                mensagemErro
-            ]);
+        } catch (error) {
+            console.error(error);
+
+            adicionarMensagem(
+                "bestpick",
+                "Não foi possível enviar sua mensagem. Tente novamente."
+            );
         } finally {
             setCarregando(false);
         }
     }
 
+    async function handleFavoritar(produto) {
+        try {
+            const favorito = favoritos[produto.id];
+
+            if (favorito) {
+                await favoritoAPI.removerAsync(favorito.id);
+
+                setFavoritos(atuais => {
+                    const novos = { ...atuais };
+                    delete novos[produto.id];
+                    return novos;
+                });
+
+                return;
+            }
+
+            const salvo =
+                await favoritoAPI.adicionarAsync(produto.id);
+
+            setFavoritos(atuais => ({
+                ...atuais,
+                [produto.id]: salvo
+            }));
+
+        } catch (error) {
+            console.error(
+                "Erro ao favoritar produto:",
+                error
+            );
+        }
+    }
+
     function handleNovaBusca() {
+        if (aguardandoNovaBusca)
+            return;
+
         setMensagem("");
         setMensagens([]);
         setProduto(null);
         setValorCompra(null);
         setMotivoCompra(null);
-        setCarregando(false);
         setBuscaCompleta(false);
+        setFavoritos({});
 
-        if (textareaRef.current) {
+        if (textareaRef.current)
             textareaRef.current.style.height = "auto";
-        }
     }
 
     return (
         <Sidebar>
 
-            <Topbar titulo="Home" />
+            <Topbar titulo="Chat" />
 
             <div className={style.home}>
 
@@ -165,10 +210,37 @@ export function Home() {
                                 className={
                                     item.tipo === "usuario"
                                         ? style.mensagemUsuario
-                                        : style.mensagemBestPick
+                                        : item.produtos?.length
+                                            ? style.respostaProdutos
+                                            : style.mensagemBestPick
                                 }
                             >
-                                {item.texto}
+
+                                {item.texto && (
+                                    <div className={
+                                        item.produtos?.length
+                                            ? style.mensagemBestPick
+                                            : ""
+                                    }>
+                                        {item.texto}
+                                    </div>
+                                )}
+
+                                {item.produtos?.length > 0 && (
+                                    <div className={style.produtos}>
+
+                                        {item.produtos.map((produto, produtoIndex) => (
+                                            <CardProduto
+                                                key={produto.id || produtoIndex}
+                                                produto={produto}
+                                                favorito={!!favoritos[produto.id]}
+                                                onFavoritar={handleFavoritar}
+                                            />
+                                        ))}
+
+                                    </div>
+                                )}
+
                             </div>
                         ))}
 
@@ -191,8 +263,11 @@ export function Home() {
                             type="button"
                             className={style.novaBusca}
                             onClick={handleNovaBusca}
+                            disabled={aguardandoNovaBusca}
                         >
-                            Nova busca
+                            {aguardandoNovaBusca
+                                ? "Aguarde para iniciar uma nova busca..."
+                                : "Nova busca"}
                         </button>
                     )}
 
@@ -214,9 +289,8 @@ export function Home() {
                                 if (e.key === "Enter" && !e.shiftKey) {
                                     e.preventDefault();
 
-                                    if (!carregando && !buscaCompleta && mensagem.trim()) {
+                                    if (!carregando && !buscaCompleta && mensagem.trim())
                                         e.currentTarget.form.requestSubmit();
-                                    }
                                 }
                             }}
                             rows="1"

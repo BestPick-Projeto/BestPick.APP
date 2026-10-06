@@ -1,11 +1,14 @@
 import style from './SidebarItem.module.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-export function SidebarItem({ texto, link, logo }) {
+export function SidebarItem({ texto, link, logo, retraida }) {
     return (
-        <Link to={link} className={style.sidebar_item}>
+        <NavLink to={link} title={retraida ? texto : ""}
+            className={({ isActive }) =>
+                `${style.sidebar_item} 
+                ${isActive ? style.ativo : ''}`}>
             {logo}
-            <h3 className={style.texto_link}>{texto}</h3>
-        </Link>
-    )
+            {!retraida && <h3 className={style.texto_link}>{texto}</h3>}
+        </NavLink>
+    );
 }

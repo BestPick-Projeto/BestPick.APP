@@ -1,232 +1,195 @@
 import style from "./Historico.module.css";
+import Table from "react-bootstrap/Table";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import { MdDelete, MdHistory, MdKeyboardArrowDown, MdSearch } from "react-icons/md";
+import { Fragment, useEffect, useState } from "react";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Topbar } from "../../components/Topbar/Topbar";
-import { useEffect, useState } from "react";
-import { MdVisibility, MdDelete, MdHistory } from "react-icons/md";
+import { VerHistorico } from "../VerHistorico/VerHistorico";
 import historicoAPI from "../../services/historicoAPI";
+import produtoAPI from "../../services/produtoAPI";
 
 export function Historico() {
 
     const [historicos, setHistoricos] = useState([]);
-    const [carregando, setCarregando] = useState(true);
-    const [erro, setErro] = useState("");
+    const [busca, setBusca] = useState("");
+    const [historicoAberto, setHistoricoAberto] = useState(null);
+    const [historicoSelecionado, setHistoricoSelecionado] = useState(null);
+    const [produtos, setProdutos] = useState([]);
 
     useEffect(() => {
-
-        carregarHistoricos();
-
+        historicoAPI.listarAsync()
+            .then(setHistoricos)
+            .catch(error => console.error("Erro ao carregar histórico:", error));
     }, []);
 
-    const carregarHistoricos = async () => {
+    const historicosFiltrados = historicos.filter(historico =>
+        historico.produtoNome?.toLowerCase().includes(busca.trim().toLowerCase())
+    );
 
-        try {
-            setCarregando(true);
-            setErro("");
-
-            const resposta = await historicoAPI.listarAsync();
-
-            setHistoricos(resposta);
-
-        } catch (error) {
-            console.error(error);
-            setErro("Não foi possível carregar o histórico.");
-        }
-        finally {
-            setCarregando(false);
-        }
-
-    };
-
-    const removerHistorico = async (historicoId) => {
-
-        const confirmar = window.confirm(
-            "Deseja realmente remover este histórico?"
-        );
-
-        if (!confirmar) {
+    const handleExpandir = async historicoId => {
+        if (historicoAberto === historicoId) {
+            setHistoricoAberto(null);
             return;
         }
 
         try {
+            setHistoricoAberto(historicoId);
+            setProdutos([]);
+            setProdutos(await produtoAPI.buscarPorHistoricoAsync(historicoId));
+        } catch (error) {
+            console.error("Erro ao carregar produtos:", error);
+        }
+    };
 
-            await historicoAPI.removerAsync(historicoId);
+    const handleDeletar = async () => {
+        try {
+            await historicoAPI.removerAsync(historicoSelecionado.id);
 
-            setHistoricos(
-                historicos.filter(
-                    historico => historico.id !== historicoId
-                )
+            setHistoricos(atuais =>
+                atuais.filter(historico => historico.id !== historicoSelecionado.id)
             );
 
+            if (historicoAberto === historicoSelecionado.id)
+                setHistoricoAberto(null);
+
+            setHistoricoSelecionado(null);
         } catch (error) {
-            console.error(error);
-            setErro("Não foi possível remover o histórico.");
+            console.error("Erro ao remover histórico:", error);
         }
-
     };
 
-    const verHistorico = (historicoId) => {
+    const formatarValor = valor =>
+        Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
-        console.log("Visualizar histórico:", historicoId);
-
-    };
-
-    const formatarValor = (valor) => {
-
-        return Number(valor).toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        });
-
-    };
-
-    const formatarData = (data) => {
-
-        return new Date(data).toLocaleDateString("pt-BR");
-
-    };
+    const formatarData = data =>
+        new Date(data).toLocaleDateString("pt-BR");
 
     return (
         <Sidebar>
-
             <Topbar titulo="Histórico" />
 
             <div className={style.pagina}>
 
                 <div className={style.cabecalho}>
-
                     <div>
                         <h1>Histórico de buscas</h1>
-                        <p>
-                            Consulte as buscas que você já realizou no BestPick.
-                        </p>
+                        <p>Consulte as buscas que você já realizou no BestPick.</p>
                     </div>
 
                     <div className={style.total}>
                         <MdHistory />
-
+                        <strong>{historicos.length}</strong>
                         <span>
-                            {historicos.length} {historicos.length === 1 ? "busca" : "buscas"}
+                            {historicos.length === 1 ? "busca realizada" : "buscas realizadas"}
                         </span>
                     </div>
-
                 </div>
 
-                {erro && (
-                    <div className={style.erro}>
-                        {erro}
-                    </div>
-                )}
+                <div className={style.busca}>
+                    <MdSearch />
+                    <input
+                        type="text"
+                        placeholder="Buscar pelo nome da busca..."
+                        value={busca}
+                        onChange={e => setBusca(e.target.value)}
+                    />
+                </div>
 
-                <div className={style.conteudo}>
+                <div className={style.tabela}>
+                    <Table responsive>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Valor máximo</th>
+                                <th>Motivo</th>
+                                <th>Data</th>
+                                <th></th>
+                            </tr>
+                        </thead>
 
-                    {carregando ? (
+                        <tbody>
+                            {historicosFiltrados.length ? (
+                                historicosFiltrados.map(historico => (
+                                    <Fragment key={historico.id}>
 
-                        <div className={style.carregando}>
+                                        <tr
+                                            className={style.linha}
+                                            onClick={() => handleExpandir(historico.id)}
+                                        >
+                                            <td className={style.produto}>{historico.produtoNome}</td>
+                                            <td className={style.valor}>{formatarValor(historico.valorCompra)}</td>
+                                            <td>{historico.motivoCompra}</td>
+                                            <td>{formatarData(historico.dataBusca)}</td>
 
-                            <div className={style.loader}></div>
+                                            <td className={style.acoes}>
+                                                <button
+                                                    className={style.deletar}
+                                                    onClick={e => {
+                                                        e.stopPropagation();
+                                                        setHistoricoSelecionado(historico);
+                                                    }}
+                                                    title="Excluir"
+                                                >
+                                                    <MdDelete />
+                                                </button>
 
-                            <p>Carregando histórico...</p>
-
-                        </div>
-
-                    ) : historicos.length === 0 ? (
-
-                        <div className={style.vazio}>
-
-                            <MdHistory />
-
-                            <h2>Nenhuma busca encontrada</h2>
-
-                            <p>
-                                Suas buscas realizadas aparecerão aqui.
-                            </p>
-
-                        </div>
-
-                    ) : (
-
-                        <div className={style.tabelaContainer}>
-
-                            <table className={style.tabela}>
-
-                                <thead>
-                                    <tr>
-                                        <th>Produto</th>
-                                        <th>Valor máximo</th>
-                                        <th>Motivo</th>
-                                        <th>Data</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                    {historicos.map((historico) => (
-
-                                        <tr key={historico.id}>
-
-                                            <td>
-                                                <div className={style.produto}>
-                                                    {historico.produtoNome}
-                                                </div>
+                                                <MdKeyboardArrowDown
+                                                    className={`${style.seta} ${historicoAberto === historico.id ? style.setaAberta : ""
+                                                        }`}
+                                                />
                                             </td>
-
-                                            <td>
-                                                <span className={style.valor}>
-                                                    {formatarValor(historico.valorCompra)}
-                                                </span>
-                                            </td>
-
-                                            <td>
-                                                {historico.motivoCompra}
-                                            </td>
-
-                                            <td>
-                                                {formatarData(historico.dataBusca)}
-                                            </td>
-
-                                            <td>
-
-                                                <div className={style.acoes}>
-
-                                                    <button
-                                                        type="button"
-                                                        className={style.botaoVer}
-                                                        onClick={() => verHistorico(historico.id)}
-                                                        title="Visualizar"
-                                                    >
-                                                        <MdVisibility />
-                                                    </button>
-
-                                                    <button
-                                                        type="button"
-                                                        className={style.botaoExcluir}
-                                                        onClick={() => removerHistorico(historico.id)}
-                                                        title="Excluir"
-                                                    >
-                                                        <MdDelete />
-                                                    </button>
-
-                                                </div>
-
-                                            </td>
-
                                         </tr>
 
-                                    ))}
+                                        {historicoAberto === historico.id && (
+                                            <tr className={style.linhaExpandida}>
+                                                <td colSpan="5">
+                                                    <VerHistorico produtos={produtos} />
+                                                </td>
+                                            </tr>
+                                        )}
 
-                                </tbody>
-
-                            </table>
-
-                        </div>
-
-                    )}
-
+                                    </Fragment>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="5" className={style.vazio}>
+                                        {busca ? "Nenhuma busca encontrada." : "Nenhum histórico encontrado."}
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </Table>
                 </div>
 
             </div>
 
+            <Modal
+                show={!!historicoSelecionado}
+                onHide={() => setHistoricoSelecionado(null)}
+                centered
+                contentClassName={style.modal}
+            >
+                <Modal.Header closeButton closeVariant="white" className={style.modalHeader}>
+                    <Modal.Title>Excluir histórico</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body className={style.modalBody}>
+                    Tem certeza que deseja excluir a busca por{" "}
+                    <strong>{historicoSelecionado?.produtoNome}</strong>?
+                </Modal.Body>
+
+                <Modal.Footer className={style.modalFooter}>
+                    <Button variant="secondary" onClick={() => setHistoricoSelecionado(null)}>
+                        Cancelar
+                    </Button>
+
+                    <Button variant="danger" onClick={handleDeletar}>
+                        Excluir
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Sidebar>
     );
 }

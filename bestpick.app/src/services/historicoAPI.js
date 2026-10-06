@@ -2,6 +2,21 @@ import { HTTPClient } from "./client";
 
 const historicoAPI = {
 
+    async adicionarAsync(produtoNome, valorCompra, motivoCompra) {
+        try {
+            const response = await HTTPClient.post(`/Historico`, {
+                ProdutoNome: produtoNome,
+                ValorCompra: valorCompra,
+                MotivoCompra: motivoCompra
+            });
+
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao adicionar histórico:", error);
+            throw error;
+        }
+    },
+
     async listarAsync() {
         try {
             const response = await HTTPClient.get(`/Historico`);

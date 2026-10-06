@@ -1,42 +1,33 @@
 .pagina {
     width: 100%;
     min-height: 100vh;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
     color: white;
 }
 
 .conteudo {
     width: 100%;
     max-width: 430px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
     padding: 30px;
-
     box-sizing: border-box;
 }
 
 .marca {
     text-align: center;
-
     margin-bottom: 30px;
 }
 
 .marca h1 {
     margin: 0;
-
     color: white;
-
     font-size: 36px;
     font-weight: 700;
 }
@@ -47,81 +38,60 @@
 
 .marca p {
     margin: 6px 0 0;
-
     color: #858d88;
-
     font-size: 13px;
 }
 
 .formulario {
     width: 100%;
-
     padding: 30px;
-
     background: rgba(8, 12, 9, 0.94);
-
     border: 1px solid #1d251f;
     border-radius: 16px;
-
     box-sizing: border-box;
 }
 
 .formulario h2 {
     margin: 0 0 6px;
-
     color: white;
-
     font-size: 24px;
     font-weight: 600;
 }
 
 .eyebrow {
     margin: 0 0 25px;
-
     color: #7e8781;
-
     font-size: 13px;
 }
 
 .form {
     display: flex;
     flex-direction: column;
-
     gap: 15px;
 }
 
 .campo {
     width: 100%;
-
     position: relative;
 }
 
 .input {
     width: 100%;
     height: 48px;
-
     padding: 0 14px;
-
     background: #111512;
-
     border: 1px solid #252c27;
     border-radius: 10px;
-
     outline: none;
-
     color: white;
-
     font-family: inherit;
     font-size: 14px;
-
     box-sizing: border-box;
-
     transition: 0.2s;
 }
 
 .input:focus {
     border-color: #22c55e;
-
     box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.08);
 }
 
@@ -135,28 +105,18 @@
 
 .botaoOlho {
     position: absolute;
-
     right: 14px;
     top: 50%;
-
     transform: translateY(-50%);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 0;
-
     background: transparent;
-
     border: none;
-
     color: #7e8781;
-
     font-size: 21px;
-
     cursor: pointer;
-
     transition: 0.2s;
 }
 
@@ -167,36 +127,26 @@
 .botaoEntrar {
     width: 100%;
     height: 48px;
-
     margin-top: 5px;
-
     background: #22c55e;
-
     border: none;
     border-radius: 10px;
-
     color: #071009;
-
     font-family: inherit;
     font-size: 14px;
     font-weight: 700;
-
     cursor: pointer;
-
     transition: 0.2s;
 }
 
 .botaoEntrar:hover {
     background: #2bd968;
-
     transform: translateY(-1px);
 }
 
 .botaoEntrar:disabled {
     cursor: not-allowed;
-
     opacity: 0.7;
-
     transform: none;
 }
 
@@ -204,20 +154,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     gap: 9px;
 }
 
 .loaderBotao {
     width: 18px;
     height: 18px;
-
     display: inline-block;
-
     border: 2px solid rgba(7, 16, 9, 0.3);
     border-top-color: #071009;
     border-radius: 50%;
-
     animation: girar 0.7s linear infinite;
 }
 
@@ -229,16 +175,11 @@
 
 .mensagemErro {
     margin: 0 0 15px;
-
     padding: 10px 12px;
-
     background: rgba(239, 68, 68, 0.08);
-
     border: 1px solid rgba(239, 68, 68, 0.3);
     border-radius: 8px;
-
     color: #f87171;
-
     font-size: 13px;
 }
 
@@ -246,33 +187,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     gap: 5px;
-
     margin-top: 22px;
 }
 
 .criarConta p {
     margin: 0;
-
     color: #747c77;
-
     font-size: 13px;
 }
 
 .criarConta button {
     padding: 0;
-
     background: transparent;
-
     border: none;
-
     color: #22c55e;
-
     font-family: inherit;
     font-size: 13px;
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -282,29 +214,13 @@
 
 .rodape {
     margin: 25px 0 0;
-
     color: #4d554f;
-
     font-size: 11px;
     text-align: center;
 }
 
-.input:-webkit-autofill,
-.input:-webkit-autofill:hover,
-.input:-webkit-autofill:focus,
-.input:-webkit-autofill:active {
-    -webkit-text-fill-color: white;
-
-    -webkit-box-shadow: 0 0 0 1000px #111512 inset;
-    box-shadow: 0 0 0 1000px #111512 inset;
-
-    caret-color: white;
-
-    transition: background-color 5000s ease-in-out 0s;
-}
 
 @media (max-width: 500px) {
-
     .conteudo {
         padding: 20px;
     }
@@ -316,5 +232,4 @@
     .marca h1 {
         font-size: 32px;
     }
-
 }

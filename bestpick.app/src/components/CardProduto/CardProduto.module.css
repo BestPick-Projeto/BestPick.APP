@@ -1,0 +1,151 @@
+.card {
+    width: 100%;
+
+    display: flex;
+    gap: 16px;
+
+    padding: 16px;
+
+    background: #0d110e;
+
+    border: 1px solid #292d2a;
+    border-radius: 14px;
+
+    box-sizing: border-box;
+
+    transition: 0.2s;
+}
+
+.card:hover {
+    border-color: rgba(34, 197, 94, 0.5);
+    transform: translateY(-2px);
+}
+
+.imagem {
+    min-width: 130px;
+    width: 130px;
+    height: 130px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: white;
+
+    border-radius: 10px;
+}
+
+.imagem img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+.conteudo {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo h3 {
+    margin: 0 0 8px;
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.preco {
+    margin-bottom: 10px;
+
+    color: #22c55e;
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.conteudo ul {
+    margin: 0 0 14px;
+    padding-left: 18px;
+
+    color: #9da59f;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.conteudo li::marker {
+    color: #22c55e;
+}
+
+.acoes {
+    margin-top: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.acoes a,
+.acoes button {
+    padding: 8px 14px;
+
+    background: #22c55e;
+
+    border: 1px solid #22c55e;
+    border-radius: 8px;
+
+    color: #061008;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.acoes a:hover,
+.acoes button:hover {
+    background: #2bd968;
+}
+.favoritar {
+    width: 42px;
+    height: 42px;
+    border: 1px solid #22c55e;
+    border-radius: 8px;
+    background: transparent;
+    color: #22c55e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s;
+}
+
+.favoritar:hover {
+    background: #22c55e;
+    color: #000;
+}
+@media (max-width: 600px) {
+
+    .card {
+        flex-direction: column;
+    }
+
+    .imagem {
+        width: 100%;
+        height: 180px;
+    }
+
+}

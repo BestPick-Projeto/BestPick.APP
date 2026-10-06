@@ -27,7 +27,7 @@ export function Login() {
 
             await new Promise(resolve => setTimeout(resolve, 750));
 
-            navigate('/home');
+            navigate('/dashboard');
 
         } catch (error) {
             console.error(error);
@@ -64,6 +64,7 @@ export function Login() {
                         <div className={styles.campo}>
 
                             <input
+                                maxLength={50}
                                 id="email"
                                 type="email"
                                 placeholder="E-mail"
@@ -77,6 +78,8 @@ export function Login() {
 
                         <div className={styles.campo}>
                             <input
+                                minLength={6}
+                                maxLength={20}
                                 id="senha"
                                 type={mostrarSenha ? "text" : "password"}
                                 placeholder="Senha"
