@@ -3,58 +3,38 @@ import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Topbar } from "../../components/Topbar/Topbar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-    MdSearch,
-    MdFavorite,
-    MdShoppingBag,
-    MdHistory
-} from "react-icons/md";
+import { MdSearch, MdFavorite, MdShoppingBag, MdHistory } from "react-icons/md";
 import dashboardAPI from "../../services/dashboardAPI";
 
 export function Dashboard() {
-
     const [dashboard, setDashboard] = useState(null);
     const [carregando, setCarregando] = useState(true);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-
         dashboardAPI.obterAsync()
             .then(setDashboard)
             .catch(error => console.error("Erro ao carregar dashboard:", error))
             .finally(() => setCarregando(false));
-
     }, []);
 
     if (carregando) {
         return (
             <Sidebar>
-
                 <Topbar titulo="Dashboard" />
-
                 <div className={style.dashboard}>
                     <div className={style.carregando}>
                         <div className={style.loader}></div>
                         <p>Carregando dashboard...</p>
                     </div>
                 </div>
-
             </Sidebar>
         );
     }
 
-    const total =
-        (dashboard?.totalBuscas ?? 0) +
-        (dashboard?.totalAdquiridos ?? 0) +
-        (dashboard?.totalFavoritados ?? 0);
-
-    const porcentagem = (valor) =>
-        total ? Math.round((valor / total) * 100) : 0;
-
     return (
         <Sidebar>
-
             <Topbar titulo="Dashboard" />
 
             <div className={style.dashboard}>
@@ -131,21 +111,21 @@ export function Dashboard() {
                         <div className={style.porcentagem}>
                             <span>Buscas</span>
                             <strong>
-                                {porcentagem(dashboard?.totalBuscas ?? 0)}%
+                                {Math.round(dashboard?.porcentagemBuscas ?? 0)}%
                             </strong>
                         </div>
 
                         <div className={style.porcentagem}>
                             <span>Adquiridos</span>
                             <strong>
-                                {porcentagem(dashboard?.totalAdquiridos ?? 0)}%
+                                {Math.round(dashboard?.porcentagemAdquiridos ?? 0)}%
                             </strong>
                         </div>
 
                         <div className={style.porcentagem}>
                             <span>Favoritados</span>
                             <strong>
-                                {porcentagem(dashboard?.totalFavoritados ?? 0)}%
+                                {Math.round(dashboard?.porcentagemFavoritados ?? 0)}%
                             </strong>
                         </div>
 

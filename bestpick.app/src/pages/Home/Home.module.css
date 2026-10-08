@@ -70,20 +70,6 @@
     justify-content: flex-end;
 }
 
-.avatarIA {
-    min-width: 32px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #22c55e;
-    color: #071009;
-    border-radius: 50%;
-    font-size: 14px;
-    font-weight: 700;
-}
-
 .mensagemIA {
     max-width: 70%;
     padding: 12px 16px;

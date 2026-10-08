@@ -205,10 +205,7 @@ export function Home() {
                     <div className={style.mensagens}>
 
                         {mensagens.map((item, index) => (
-                            <div
-                                key={index}
-                                className={
-                                    item.tipo === "usuario"
+                            <div key={index} className={item.tipo === "usuario"
                                         ? style.mensagemUsuario
                                         : item.produtos?.length
                                             ? style.respostaProdutos
@@ -217,8 +214,7 @@ export function Home() {
                             >
 
                                 {item.texto && (
-                                    <div className={
-                                        item.produtos?.length
+                                    <div className={item.produtos?.length
                                             ? style.mensagemBestPick
                                             : ""
                                     }>

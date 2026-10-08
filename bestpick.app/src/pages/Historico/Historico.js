@@ -6,7 +6,7 @@ import { MdDelete, MdHistory, MdKeyboardArrowDown, MdSearch } from "react-icons/
 import { Fragment, useEffect, useState } from "react";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Topbar } from "../../components/Topbar/Topbar";
-import { VerHistorico } from "../VerHistorico/VerHistorico";
+import { VerHistorico } from "../../components/VerHistorico/VerHistorico";
 import historicoAPI from "../../services/historicoAPI";
 import produtoAPI from "../../services/produtoAPI";
 
