@@ -10,6 +10,7 @@ const chatAPI = {
                 ValorCompra: valorCompra,
                 MotivoCompra: motivoCompra,
             };
+            console.log("DADOS ENVIADOS:", chat);
 
             const response = await HTTPClient.post(`/Chat/Mensagem`, chat);
 

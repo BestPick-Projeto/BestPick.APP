@@ -1,35 +1,67 @@
 import style from "./Home.module.css";
+
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Topbar } from "../../components/Topbar/Topbar";
 import { CardProduto } from "../../components/CardProduto/CardProduto";
+
 import { useEffect, useRef, useState } from "react";
 import { MdSend } from "react-icons/md";
 import { jwtDecode } from "jwt-decode";
+
 import chatAPI from "../../services/chatAPI";
 import historicoAPI from "../../services/historicoAPI";
 import produtoAPI from "../../services/produtoAPI";
 import favoritoAPI from "../../services/favoritoAPI";
 
 export function Home() {
+    const token = localStorage.getItem("token");
+    const usuario = token ? jwtDecode(token) : {};
+
+    const nomeUsuario =
+        usuario["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || "Usuário";
+
+    const usuarioId =
+        usuario["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+
+    const chaveChat = `bestpickChat_${usuarioId || "usuario"}`;
+
+    const dadosSalvos = useRef(
+        JSON.parse(localStorage.getItem(chaveChat) || "{}")
+    ).current;
 
     const [mensagem, setMensagem] = useState("");
-    const [mensagens, setMensagens] = useState([]);
-    const [produto, setProduto] = useState(null);
-    const [valorCompra, setValorCompra] = useState(null);
-    const [motivoCompra, setMotivoCompra] = useState(null);
+    const [mensagens, setMensagens] = useState(dadosSalvos.mensagens || []);
+
+    const [produto, setProduto] = useState(dadosSalvos.produto ?? null);
+    const [valorCompra, setValorCompra] = useState(dadosSalvos.valorCompra ?? null);
+    const [motivoCompra, setMotivoCompra] = useState(dadosSalvos.motivoCompra ?? null);
+
     const [carregando, setCarregando] = useState(false);
-    const [buscaCompleta, setBuscaCompleta] = useState(false);
+    const [buscaCompleta, setBuscaCompleta] = useState(dadosSalvos.buscaCompleta || false);
     const [aguardandoNovaBusca, setAguardandoNovaBusca] = useState(false);
-    const [favoritos, setFavoritos] = useState({});
+    const [favoritos, setFavoritos] = useState(dadosSalvos.favoritos || {});
 
     const finalMensagensRef = useRef(null);
     const textareaRef = useRef(null);
 
-    const token = localStorage.getItem("token");
-
-    const nomeUsuario = token
-        ? jwtDecode(token)["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || "Usuário"
-        : "Usuário";
+    useEffect(() => {
+        localStorage.setItem(chaveChat, JSON.stringify({
+            mensagens,
+            produto,
+            valorCompra,
+            motivoCompra,
+            buscaCompleta,
+            favoritos
+        }));
+    }, [
+        chaveChat,
+        mensagens,
+        produto,
+        valorCompra,
+        motivoCompra,
+        buscaCompleta,
+        favoritos
+    ]);
 
     useEffect(() => {
         finalMensagensRef.current?.scrollIntoView({
@@ -47,8 +79,7 @@ export function Home() {
     function handleAlterarMensagem(e) {
         setMensagem(e.target.value);
         e.target.style.height = "auto";
-        e.target.style.height =
-            Math.min(e.target.scrollHeight, 130) + "px";
+        e.target.style.height = Math.min(e.target.scrollHeight, 130) + "px";
     }
 
     async function salvarBusca(resposta) {
@@ -148,8 +179,7 @@ export function Home() {
                 return;
             }
 
-            const salvo =
-                await favoritoAPI.adicionarAsync(produto.id);
+            const salvo = await favoritoAPI.adicionarAsync(produto.id);
 
             setFavoritos(atuais => ({
                 ...atuais,
@@ -157,10 +187,7 @@ export function Home() {
             }));
 
         } catch (error) {
-            console.error(
-                "Erro ao favoritar produto:",
-                error
-            );
+            console.error("Erro ao favoritar produto:", error);
         }
     }
 
@@ -182,49 +209,46 @@ export function Home() {
 
     return (
         <Sidebar>
-
             <Topbar titulo="Chat" />
 
             <div className={style.home}>
-
                 <div className={style.chat}>
 
                     <div className={style.apresentacao}>
-
-                        <h1>
-                            Olá, {nomeUsuario}!
-                        </h1>
+                        <h1>Olá, {nomeUsuario}!</h1>
 
                         <p className={style.descricao}>
                             Me conte o produto que você procura. Quanto mais detalhes
                             você fornecer, melhor será a recomendação.
                         </p>
-
                     </div>
 
                     <div className={style.mensagens}>
-
                         {mensagens.map((item, index) => (
-                            <div key={index} className={item.tipo === "usuario"
+                            <div
+                                key={index}
+                                className={
+                                    item.tipo === "usuario"
                                         ? style.mensagemUsuario
                                         : item.produtos?.length
                                             ? style.respostaProdutos
                                             : style.mensagemBestPick
                                 }
                             >
-
                                 {item.texto && (
-                                    <div className={item.produtos?.length
-                                            ? style.mensagemBestPick
-                                            : ""
-                                    }>
+                                    <div
+                                        className={
+                                            item.produtos?.length
+                                                ? style.mensagemBestPick
+                                                : ""
+                                        }
+                                    >
                                         {item.texto}
                                     </div>
                                 )}
 
                                 {item.produtos?.length > 0 && (
                                     <div className={style.produtos}>
-
                                         {item.produtos.map((produto, produtoIndex) => (
                                             <CardProduto
                                                 key={produto.id || produtoIndex}
@@ -233,45 +257,35 @@ export function Home() {
                                                 onFavoritar={handleFavoritar}
                                             />
                                         ))}
-
                                     </div>
                                 )}
-
                             </div>
                         ))}
 
                         {carregando && (
                             <div className={style.mensagemBestPick}>
-                                <div className={style.pensando}>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
+                                Pensando...
                             </div>
                         )}
 
                         <div ref={finalMensagensRef}></div>
-
                     </div>
 
-                    {buscaCompleta && (
-                        <button
-                            type="button"
-                            className={style.novaBusca}
-                            onClick={handleNovaBusca}
-                            disabled={aguardandoNovaBusca}
-                        >
-                            {aguardandoNovaBusca
-                                ? "Aguarde para iniciar uma nova busca..."
-                                : "Nova busca"}
-                        </button>
-                    )}
+                    <button
+                        type="button"
+                        className={style.novaBusca}
+                        onClick={handleNovaBusca}
+                        disabled={aguardandoNovaBusca}
+                    >
+                        {aguardandoNovaBusca
+                            ? "Aguarde para iniciar uma nova busca..."
+                            : "Nova busca"}
+                    </button>
 
                     <form
                         className={style.areaMensagem}
                         onSubmit={handleEnviar}
                     >
-
                         <textarea
                             ref={textareaRef}
                             placeholder={
@@ -300,7 +314,6 @@ export function Home() {
                         >
                             <MdSend />
                         </button>
-
                     </form>
 
                     <p className={style.aviso}>
@@ -308,9 +321,7 @@ export function Home() {
                     </p>
 
                 </div>
-
             </div>
-
         </Sidebar>
     );
 }

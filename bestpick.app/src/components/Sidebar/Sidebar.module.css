@@ -10,7 +10,6 @@
     height: 100vh;
     background: #050806;
     z-index: 1000;
-    transition: width 0.25s ease;
 }
 
 .sidebar_header {
@@ -27,7 +26,6 @@
     width: 140px;
     height: 105px;
     object-fit: contain;
-    transition: 0.25s;
 }
 
 .sidebar_header::after {
@@ -47,47 +45,16 @@
     box-sizing: border-box;
 }
 
-.botao_retrair {
-    position: absolute;
-    top: 242px;
-    right: -14px;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #111512;
-    border: 1px solid #22c55e;
-    border-radius: 50%;
-    color: #22c55e;
-    font-size: 20px;
-    transition: 0.2s;
-}
-
-.botao_retrair:hover {
-    background: #22c55e;
-    color: #050806;
-}
-
-.retraida .sidebar_header img {
-    width: 45px;
-}
-
-.retraida .sidebar_header::after {
-    display: none;
-}
-
 .pagina_conteudo {
     width: calc(100% - var(--sidebar-width));
     min-height: 100vh;
     margin-left: var(--sidebar-width);
     box-sizing: border-box;
-    transition: width 0.25s ease, margin-left 0.25s ease;
 }
 
 @media (max-width: 800px) {
     .layout {
-        --sidebar-width: 65px !important;
+        --sidebar-width: 65px;
     }
 
     .sidebar_header {
@@ -99,8 +66,7 @@
         height: 60px;
     }
 
-    .sidebar_header::after,
-    .botao_retrair {
+    .sidebar_header::after {
         display: none;
     }
 

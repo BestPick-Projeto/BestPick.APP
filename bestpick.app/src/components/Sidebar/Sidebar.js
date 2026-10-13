@@ -20,9 +20,8 @@ export function Sidebar({ children }) {
     return (
         <div
             className={style.layout}
-            style={{ "--sidebar-width": retraida ? "65px" : "210px" }}
         >
-            <div className={`${style.sidebar_conteudo} ${retraida ? style.retraida : ''}`}>
+            <div className={style.sidebar_conteudo}>
                 <div className={style.sidebar_header}>
                     <Link to="/dashboard">
                         <img src={logoPreta} alt="Logo BestPick" className={style.logo} />
@@ -39,13 +38,6 @@ export function Sidebar({ children }) {
                     <SidebarItem texto="Histórico" link="/historico" logo={<MdHistory />} retraida={retraida} />
                 </div>
 
-                <button
-                    className={style.botao_retrair}
-                    onClick={alternarSidebar}
-                    aria-label={retraida ? "Expandir menu" : "Retrair menu"}
-                >
-                    {retraida ? <MdChevronRight /> : <MdChevronLeft />}
-                </button>
             </div>
 
             <div className={style.pagina_conteudo}>
