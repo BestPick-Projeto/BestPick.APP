@@ -2,21 +2,16 @@ import { useState } from 'react';
 import style from './Sidebar.module.css';
 import logoPreta from "../../assets/ImagemSide.png";
 import { SidebarItem } from '../SidebarItem/SidebarItem';
-import { MdDashboard, MdFavorite, MdHistory, MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { MdDashboard, MdFavorite, MdHistory } from "react-icons/md";
 import { IoChatboxEllipses } from "react-icons/io5";
 import { FaHome } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 export function Sidebar({ children }) {
-    const [retraida, setRetraida] = useState(
+    const [retraida] = useState(
         () => localStorage.getItem("sidebarRetraida") === "true"
     );
 
-    function alternarSidebar() {
-        const novoEstado = !retraida;
-        setRetraida(novoEstado);
-        localStorage.setItem("sidebarRetraida", novoEstado);
-    }
     return (
         <div
             className={style.layout}
