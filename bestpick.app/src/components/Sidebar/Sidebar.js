@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import style from './Sidebar.module.css';
-import logoPreta from "../../assets/ImagemSide.png";
 import { SidebarItem } from '../SidebarItem/SidebarItem';
 import { MdDashboard, MdFavorite, MdHistory } from "react-icons/md";
 import { IoChatboxEllipses } from "react-icons/io5";
-import { FaHome } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 export function Sidebar({ children }) {
@@ -19,7 +17,7 @@ export function Sidebar({ children }) {
             <div className={style.sidebar_conteudo}>
                 <div className={style.sidebar_header}>
                     <Link to="/dashboard">
-                        <img src={logoPreta} alt="Logo BestPick" className={style.logo} />
+                        <span className={style.logo}>Best<span>Pick</span></span>
                     </Link>
                 </div>
 

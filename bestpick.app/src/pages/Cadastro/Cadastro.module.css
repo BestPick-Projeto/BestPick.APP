@@ -7,7 +7,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    color: white;
+    color: var(--bp-text);
 }
 
 .conteudo {
@@ -27,40 +27,40 @@
 
 .marca h1 {
     margin: 0;
-    color: white;
+    color: var(--bp-text);
     font-size: 36px;
     font-weight: 700;
 }
 
 .marca h1 span {
-    color: #22c55e;
+    color: var(--bp-accent);
 }
 
 .marca p {
     margin: 6px 0 0;
-    color: #858d88;
+    color: var(--bp-muted);
     font-size: 13px;
 }
 
 .formulario {
     width: 100%;
     padding: 30px;
-    background: rgba(8, 12, 9, 0.94);
-    border: 1px solid #1d251f;
+    background: var(--bp-surface);
+    border: 1px solid var(--bp-border);
     border-radius: 16px;
     box-sizing: border-box;
 }
 
 .formulario h2 {
     margin: 0 0 6px;
-    color: white;
+    color: var(--bp-text);
     font-size: 24px;
     font-weight: 600;
 }
 
 .eyebrow {
     margin: 0 0 25px;
-    color: #7e8781;
+    color: var(--bp-muted);
     font-size: 13px;
 }
 
@@ -79,11 +79,11 @@
     width: 100%;
     height: 48px;
     padding: 0 14px;
-    background: #111512;
-    border: 1px solid #252c27;
+    background: var(--bp-surface);
+    border: 1px solid var(--bp-control-border);
     border-radius: 10px;
     outline: none;
-    color: white;
+    color: var(--bp-text);
     font-family: inherit;
     font-size: 14px;
     box-sizing: border-box;
@@ -91,12 +91,12 @@
 }
 
 .input:focus {
-    border-color: #22c55e;
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.08);
+    border-color: var(--bp-accent-text);
+    box-shadow: 0 0 0 3px var(--bp-accent-text);
 }
 
 .input::placeholder {
-    color: #626a65;
+    color: var(--bp-muted);
 }
 
 .inputSenha {
@@ -114,24 +114,24 @@
     padding: 0;
     background: transparent;
     border: none;
-    color: #7e8781;
+    color: var(--bp-muted);
     font-size: 21px;
     cursor: pointer;
     transition: 0.2s;
 }
 
 .botaoOlho:hover {
-    color: #22c55e;
+    color: var(--bp-accent-text);
 }
 
 .botaoEntrar {
     width: 100%;
     height: 48px;
     margin-top: 5px;
-    background: #22c55e;
+    background: var(--bp-accent);
     border: none;
     border-radius: 10px;
-    color: #071009;
+    color: var(--bp-text);
     font-family: inherit;
     font-size: 14px;
     font-weight: 700;
@@ -161,8 +161,8 @@
     width: 18px;
     height: 18px;
     display: inline-block;
-    border: 2px solid rgba(7, 16, 9, 0.3);
-    border-top-color: #071009;
+    border: 2px solid rgba(24, 35, 28, 0.3);
+    border-top-color: var(--bp-text);
     border-radius: 50%;
     animation: girar 0.7s linear infinite;
 }
@@ -176,10 +176,10 @@
 .mensagemErro {
     margin: 0 0 15px;
     padding: 10px 12px;
-    background: rgba(239, 68, 68, 0.08);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: rgba(180, 35, 24, 0.08);
+    border: 1px solid rgba(180, 35, 24, 0.3);
     border-radius: 8px;
-    color: #f87171;
+    color: var(--bp-danger);
     font-size: 13px;
 }
 
@@ -193,7 +193,7 @@
 
 .criarConta p {
     margin: 0;
-    color: #747c77;
+    color: var(--bp-muted);
     font-size: 13px;
 }
 
@@ -201,7 +201,7 @@
     padding: 0;
     background: transparent;
     border: none;
-    color: #22c55e;
+    color: var(--bp-accent-text);
     font-family: inherit;
     font-size: 13px;
     font-weight: 600;
@@ -214,7 +214,7 @@
 
 .rodape {
     margin: 25px 0 0;
-    color: #4d554f;
+    color: var(--bp-muted);
     font-size: 11px;
     text-align: center;
 }
@@ -232,4 +232,48 @@
     .marca h1 {
         font-size: 32px;
     }
+}
+/* Fundo PNG definido pelo componente. */
+.pagina {
+    background-color: var(--bp-surface);
+}
+
+.botaoEntrar:focus-visible,
+.botaoEntrar:active {
+    background-color: #16a34a;
+    color: var(--bp-text);
+}
+
+.botaoEntrar:disabled {
+    background-color: var(--bp-sidebar);
+    color: var(--bp-muted);
+}
+
+.botaoOlho:focus-visible,
+.botaoOlho:active,
+.criarConta button:hover,
+.criarConta button:focus-visible,
+.criarConta button:active {
+    color: var(--bp-accent-text);
+}
+
+.input:autofill {
+    background-color: var(--bp-surface);
+    color: var(--bp-text);
+}
+
+.input:-webkit-autofill {
+    -webkit-text-fill-color: var(--bp-text);
+    caret-color: var(--bp-text);
+}
+
+/* Contraste da marca sobre o fundo s?lvia decorativo. */
+.marca h1 { color: var(--bp-text); }
+.marca h1 span { color: var(--bp-accent-text); }
+.marca p { color: var(--bp-muted); }
+.pagina { box-sizing: border-box; min-height: 100svh; }
+@media (max-width: 520px) {
+    .pagina { padding: 24px 16px; }
+    .marca h1 { font-size: 36px; }
+    .formulario { padding: 26px 22px; }
 }

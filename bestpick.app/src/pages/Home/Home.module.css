@@ -1,12 +1,12 @@
 .home {
     min-height: 100vh;
     padding: 90px 30px 30px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-        url("../../assets/imagemTelaHome.png");
+    background-image: none;
+    background-color: var(--bp-background);
     background-size: 1200px auto;
     background-position: center top;
     background-repeat: repeat;
-    color: white;
+    color: var(--bp-text);
     box-sizing: border-box;
 }
 
@@ -26,7 +26,7 @@
 
 .saudacao {
     margin: 0 0 8px;
-    color: #22c55e;
+    color: var(--bp-accent-text);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -34,19 +34,19 @@
 
 .apresentacao h1 {
     margin: 0 0 12px;
-    color: #ffffff;
+    color: var(--bp-text);
     font-size: 30px;
     font-weight: 600;
 }
 
 .apresentacao h1 span {
-    color: #22c55e;
+    color: var(--bp-accent-text);
 }
 
 .descricao {
     margin: 0 auto;
     max-width: 580px;
-    color: #858d88;
+    color: var(--bp-muted);
     font-size: 14px;
     line-height: 1.6;
 }
@@ -73,10 +73,10 @@
 .mensagemIA {
     max-width: 70%;
     padding: 12px 16px;
-    background: #0d110e;
-    border: 1px solid #1b211c;
+    background: var(--bp-surface);
+    border: 1px solid var(--bp-border);
     border-radius: 5px 14px 14px 14px;
-    color: #d8ddd9;
+    color: var(--bp-text);
     font-size: 14px;
     line-height: 1.6;
 }
@@ -98,7 +98,7 @@
     align-self: flex-end;
     max-width: 75%;
     background: #1f6f3d;
-    color: white;
+    color: #FFFFFF;
     padding: 12px 16px;
     border-radius: 16px 16px 4px 16px;
     font-size: 14px;
@@ -109,10 +109,10 @@
 .mensagemBestPick {
     align-self: flex-start;
     max-width: 75%;
-    background: #171a18;
-    border: 1px solid #292d2a;
+    background: var(--bp-surface);
+    border: 1px solid var(--bp-border);
     border-radius: 16px 16px 16px 4px;
-    color: white;
+    color: var(--bp-text);
     padding: 12px 16px;
     font-size: 14px;
     line-height: 1.5;
@@ -142,7 +142,7 @@
 }
 
 .mensagens::-webkit-scrollbar-thumb {
-    background: #303632;
+    background: var(--bp-muted);
     border-radius: 10px;
 }
 
@@ -151,9 +151,9 @@
     margin: 0 0 15px;
     padding: 9px 18px;
     background: transparent;
-    border: 1px solid #22c55e;
+    border: 1px solid var(--bp-accent-text);
     border-radius: 10px;
-    color: #22c55e;
+    color: var(--bp-accent-text);
     font-family: inherit;
     font-size: 13px;
     font-weight: 600;
@@ -172,16 +172,16 @@
     align-items: flex-end;
     gap: 10px;
     padding: 10px;
-    background: #0d110e;
-    border: 1px solid #202721;
+    background: var(--bp-surface);
+    border: 1px solid var(--bp-control-border);
     border-radius: 16px;
     box-sizing: border-box;
     transition: 0.2s;
 }
 
 .areaMensagem:focus-within {
-    border-color: rgba(34, 197, 94, 0.55);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.04);
+    border-color: var(--bp-accent-text);
+    box-shadow: 0 0 0 3px var(--bp-accent-text);
 }
 
 .areaMensagem textarea {
@@ -194,13 +194,13 @@
     background: transparent;
     border: none;
     outline: none;
-    color: white;
+    color: var(--bp-text);
     font-family: inherit;
     font-size: 14px;
 }
 
 .areaMensagem textarea::placeholder {
-    color: #626a65;
+    color: var(--bp-muted);
 }
 
 .areaMensagem textarea:disabled {
@@ -215,10 +215,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #22c55e;
+    background: var(--bp-accent);
     border: none;
     border-radius: 10px;
-    color: #061008;
+    color: var(--bp-text);
     font-size: 20px;
     cursor: pointer;
     transition: 0.2s;
@@ -237,7 +237,7 @@
 
 .aviso {
     margin: 10px 0 0;
-    color: #515853;
+    color: var(--bp-muted);
     font-size: 11px;
     text-align: center;
 }
@@ -260,4 +260,60 @@
     .apresentacao h1 {
         font-size: 25px;
     }
+}
+.novaBusca:focus-visible,
+.novaBusca:active {
+    background-color: var(--bp-sidebar);
+    color: var(--bp-accent-text);
+}
+
+.areaMensagem button:focus-visible,
+.areaMensagem button:active {
+    background-color: #16a34a;
+    color: var(--bp-text);
+}
+
+.novaBusca:disabled,
+.areaMensagem button:disabled,
+.areaMensagem textarea:disabled {
+    background-color: var(--bp-sidebar);
+    border-color: var(--bp-border);
+    color: var(--bp-muted);
+}
+
+/* Papel de parede decorativo: formas desenhadas em CSS, sem PNG. */
+.home { position: relative; isolation: isolate; overflow: hidden; }
+.papelDeParede {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-auto-rows: 85px;
+    gap: 14px;
+    padding: 30px;
+    overflow: hidden;
+    pointer-events: none;
+    color: var(--bp-accent-text);
+    opacity: 0.42;
+}
+.desenho { position: relative; width: 28px; height: 42px; border: 1.5px solid currentColor; border-radius: 5px; transform: rotate(-24deg); justify-self: center; align-self: center; }
+.desenho::before, .desenho::after { content: ''; position: absolute; }
+/* Celular */
+.desenho::before { bottom: 4px; left: 10px; width: 5px; height: 2px; background: currentColor; }
+.desenho::after { top: 4px; left: 7px; width: 11px; border-top: 1px solid currentColor; }
+/* Sacola */
+.desenho:nth-child(4n+2) { width: 34px; height: 32px; border-radius: 3px; transform: rotate(18deg); }
+.desenho:nth-child(4n+2)::before { width: 14px; height: 12px; left: 8px; top: -9px; background: transparent; border: 1.5px solid currentColor; border-bottom: 0; border-radius: 12px 12px 0 0; }
+.desenho:nth-child(4n+2)::after { display: none; }
+/* Etiqueta */
+.desenho:nth-child(4n+3) { width: 38px; height: 27px; border-radius: 4px 10px 10px 4px; transform: rotate(-35deg); }
+.desenho:nth-child(4n+3)::before { left: 5px; top: 9px; width: 5px; height: 5px; border: 1px solid currentColor; border-radius: 50%; background: transparent; }
+.desenho:nth-child(4n+3)::after { top: 12px; left: 17px; width: 13px; }
+/* Notebook */
+.desenho:nth-child(4n) { width: 42px; height: 29px; border-radius: 3px; transform: rotate(12deg); }
+.desenho:nth-child(4n)::before { left: -5px; bottom: -6px; width: 50px; height: 4px; border: 1px solid currentColor; border-radius: 0 0 4px 4px; background: transparent; }
+.desenho:nth-child(4n)::after { inset: 4px; width: auto; border: 1px solid currentColor; }
+@media (max-width: 520px) {
+    .papelDeParede { grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 20px 12px; }
 }

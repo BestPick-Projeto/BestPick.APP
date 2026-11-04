@@ -4,7 +4,7 @@
     gap: 15px;
     width: 100%;
     padding: 22px;
-    border-left: 3px solid #22c55e;
+    border-left: 3px solid var(--bp-accent-text);
     box-sizing: border-box;
 }
 
@@ -13,8 +13,8 @@
     gap: 15px;
     min-width: 0;
     padding: 15px;
-    background: #0d110e;
-    border: 1px solid #1b211c;
+    background: var(--bp-surface);
+    border: 1px solid var(--bp-border);
     border-radius: 10px;
     box-sizing: border-box;
     overflow: hidden;
@@ -28,7 +28,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: #fff;
+    background: var(--bp-surface);
     border-radius: 8px;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .imagem span {
-    color: #777;
+    color: var(--bp-muted);
     font-size: 10px;
 }
 
@@ -55,7 +55,7 @@
     width: 100%;
     margin: 4px 0 7px;
     overflow: hidden;
-    color: #fff;
+    color: var(--bp-text);
     font-size: 13px;
     font-weight: 500;
     text-overflow: ellipsis;
@@ -63,7 +63,7 @@
 }
 
 .preco {
-    color: #22c55e;
+    color: var(--bp-price);
     font-size: 14px;
 }
 
@@ -73,19 +73,19 @@
     gap: 5px;
     margin-top: auto;
     padding-top: 8px;
-    color: #8c948f;
+    color: var(--bp-muted);
     font-size: 10px;
     text-decoration: none;
 }
 
 .infoProduto a:hover {
-    color: #22c55e;
+    color: var(--bp-accent-text);
 }
 
 .semProdutos {
     grid-column: 1 / -1;
     padding: 25px;
-    color: #69716c;
+    color: var(--bp-muted);
     font-size: 12px;
     text-align: center;
 }
@@ -122,4 +122,8 @@
     .infoProduto h3 {
         font-size: 12px;
     }
+}
+.infoProduto a:focus-visible,
+.infoProduto a:active {
+    color: var(--bp-accent-text);
 }

@@ -5,6 +5,8 @@ export function SidebarItem({ texto, link, logo }) {
     return (
         <NavLink
             to={link}
+            aria-label={texto}
+            title={texto}
             className={({ isActive }) =>
                 `${style.sidebar_item} ${isActive ? style.ativo : ''}`
             }

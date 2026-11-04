@@ -212,6 +212,11 @@ export function Home() {
             <Topbar titulo="Chat" />
 
             <div className={style.home}>
+                <div className={style.papelDeParede} aria-hidden="true">
+                    {Array.from({ length: 180 }, (_, index) => (
+                        <span key={index} className={style.desenho} />
+                    ))}
+                </div>
                 <div className={style.chat}>
 
                     <div className={style.apresentacao}>

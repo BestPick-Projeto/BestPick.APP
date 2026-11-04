@@ -11,3 +11,35 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root {
+  --bp-background: #F1F8F3;
+  --bp-sidebar: #E2F0E7;
+  --bp-surface: #FFFFFF;
+  --bp-text: #18231C;
+  --bp-border: #E0E8E2;
+  --bp-control-border: #718878;
+  --bp-accent: #22c55e;
+  --bp-accent-text: #1f6f3d;
+  --bp-muted: #4B6052;
+  --bp-price: var(--bp-accent-text);
+  --bp-danger: #B42318;
+}
+
+html body {
+  background-color: var(--bp-background);
+  color: var(--bp-text);
+}
+
+::selection {
+  background-color: var(--bp-sidebar);
+  color: var(--bp-text);
+}
+
+:where(a, button, input, textarea):focus-visible {
+  outline-color: var(--bp-accent-text);
+}
+
+:where(input, textarea) {
+  caret-color: var(--bp-text);
+}

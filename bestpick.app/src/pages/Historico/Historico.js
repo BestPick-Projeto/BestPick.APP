@@ -135,15 +135,26 @@ export function Historico() {
                                                     <MdDelete />
                                                 </button>
 
-                                                <MdKeyboardArrowDown
-                                                    className={`${style.seta} ${historicoAberto === historico.id ? style.setaAberta : ""
-                                                        }`}
-                                                />
+                                                <button
+                                                    type="button"
+                                                    className={style.expandir}
+                                                    aria-label={`Ver produtos de ${historico.produtoNome}`}
+                                                    aria-expanded={historicoAberto === historico.id}
+                                                    aria-controls={`produtos-${historico.id}`}
+                                                    onClick={e => {
+                                                        e.stopPropagation();
+                                                        handleExpandir(historico.id);
+                                                    }}
+                                                >
+                                                    <MdKeyboardArrowDown
+                                                        className={`${style.seta} ${historicoAberto === historico.id ? style.setaAberta : ""}`}
+                                                    />
+                                                </button>
                                             </td>
                                         </tr>
 
                                         {historicoAberto === historico.id && (
-                                            <tr className={style.linhaExpandida}>
+                                            <tr id={`produtos-${historico.id}`} className={style.linhaExpandida}>
                                                 <td colSpan="5">
                                                     <VerHistorico produtos={produtos} />
                                                 </td>

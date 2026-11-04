@@ -2,15 +2,13 @@ import style from "./Dashboard.module.css";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Topbar } from "../../components/Topbar/Topbar";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdSearch, MdFavorite, MdShoppingBag, MdHistory } from "react-icons/md";
 import dashboardAPI from "../../services/dashboardAPI";
 
 export function Dashboard() {
     const [dashboard, setDashboard] = useState(null);
     const [carregando, setCarregando] = useState(true);
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         dashboardAPI.obterAsync()
@@ -46,7 +44,7 @@ export function Dashboard() {
 
                 <div className={style.cards}>
 
-                    <div className={style.card} onClick={() => navigate("/historico")}>
+                    <Link className={style.card} to="/historico">
                         <div className={style.icone}>
                             <MdSearch />
                         </div>
@@ -55,9 +53,9 @@ export function Dashboard() {
                             <p>Buscas realizadas</p>
                             <h2>{dashboard?.totalBuscas ?? 0}</h2>
                         </div>
-                    </div>
+                    </Link>
 
-                    <div className={style.card} onClick={() => navigate("/favoritos")}>
+                    <Link className={style.card} to="/favoritos">
                         <div className={style.icone}>
                             <MdFavorite />
                         </div>
@@ -66,9 +64,9 @@ export function Dashboard() {
                             <p>Favoritados</p>
                             <h2>{dashboard?.totalFavoritados ?? 0}</h2>
                         </div>
-                    </div>
+                    </Link>
 
-                    <div className={style.card} onClick={() => navigate("/favoritos")}>
+                    <Link className={style.card} to="/favoritos">
                         <div className={style.icone}>
                             <MdShoppingBag />
                         </div>
@@ -77,11 +75,11 @@ export function Dashboard() {
                             <p>Adquiridos</p>
                             <h2>{dashboard?.totalAdquiridos ?? 0}</h2>
                         </div>
-                    </div>
+                    </Link>
 
                 </div>
 
-                <div className={style.resumo} onClick={() => navigate("/historico")}>
+                <Link className={style.resumo} to="/historico">
 
                     <div className={style.resumoIcone}>
                         <MdHistory />
@@ -97,7 +95,7 @@ export function Dashboard() {
 
                     <span>Ver histórico →</span>
 
-                </div>
+                </Link>
 
                 <div className={style.distribuicao}>
 

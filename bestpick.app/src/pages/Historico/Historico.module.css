@@ -1,8 +1,8 @@
 .pagina {
     min-height: 100vh;
     padding: 100px 35px 35px;
-    background: #050705;
-    color: #fff;
+    background: var(--bp-background);
+    color: var(--bp-text);
     box-sizing: border-box;
 }
 
@@ -22,7 +22,7 @@
 
 .cabecalho p {
     margin: 0;
-    color: #737b76;
+    color: var(--bp-muted);
     font-size: 13px;
 }
 
@@ -31,16 +31,16 @@
     align-items: center;
     gap: 7px;
     padding: 10px 15px;
-    background: #0d110e;
-    border: 1px solid #1d2820;
+    background: var(--bp-surface);
+    border: 1px solid var(--bp-border);
     border-radius: 10px;
-    color: #8c948f;
+    color: var(--bp-muted);
     font-size: 12px;
 }
 
 .total svg,
 .total strong {
-    color: #22c55e;
+    color: var(--bp-accent-text);
 }
 
 .total svg {
@@ -59,18 +59,18 @@
     gap: 10px;
     margin-bottom: 15px;
     padding: 0 14px;
-    background: #0d110e;
-    border: 1px solid #1b211c;
+    background: var(--bp-surface);
+    border: 1px solid var(--bp-control-border);
     border-radius: 9px;
     box-sizing: border-box;
 }
 
 .busca:focus-within {
-    border-color: #22c55e;
+    border-color: var(--bp-accent-text);
 }
 
 .busca svg {
-    color: #69716c;
+    color: var(--bp-muted);
     font-size: 20px;
 }
 
@@ -78,21 +78,21 @@
     width: 100%;
     padding: 12px 0;
     background: transparent;
-    color: #fff;
+    color: var(--bp-text);
     border: none;
     outline: none;
     font-size: 13px;
 }
 
 .busca input::placeholder {
-    color: #69716c;
+    color: var(--bp-muted);
 }
 
 .tabela {
     width: 100%;
     overflow: hidden;
-    background: #0d110e;
-    border: 1px solid #1b211c;
+    background: var(--bp-surface);
+    border: 1px solid var(--bp-border);
     border-radius: 12px;
 }
 
@@ -105,21 +105,21 @@
 .tabela th,
 .tabela td {
     padding: 16px 20px !important;
-    border-color: #1b211c !important;
+    border-color: var(--bp-border) !important;
     vertical-align: middle;
 }
 
 .tabela th {
-    background: #101511 !important;
-    color: #737b76 !important;
+    background: var(--bp-sidebar) !important;
+    color: var(--bp-muted) !important;
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
 }
 
 .tabela td {
-    background: #0d110e !important;
-    color: #a4aba6 !important;
+    background: var(--bp-surface) !important;
+    color: var(--bp-muted) !important;
     font-size: 13px;
 }
 
@@ -128,16 +128,16 @@
 }
 
 .linha:hover td {
-    background: #111712 !important;
+    background: var(--bp-sidebar) !important;
 }
 
 .produto {
-    color: #fff !important;
+    color: var(--bp-text) !important;
     font-weight: 500;
 }
 
 .valor {
-    color: #22c55e !important;
+    color: var(--bp-price) !important;
     font-weight: 600;
 }
 
@@ -148,7 +148,8 @@
     gap: 14px;
 }
 
-.deletar {
+.deletar,
+.expandir {
     display: flex;
     padding: 0;
     background: none;
@@ -157,54 +158,54 @@
 }
 
 .deletar svg {
-    color: #747c77;
+    color: var(--bp-muted);
     font-size: 20px;
 }
 
 .deletar:hover svg {
-    color: #ef4444;
+    color: var(--bp-danger);
 }
 
 .seta {
-    color: #69716c;
+    color: var(--bp-muted);
     font-size: 23px;
     transition: .2s;
 }
 
 .setaAberta {
-    color: #22c55e;
+    color: var(--bp-accent-text);
     transform: rotate(180deg);
 }
 
 .linhaExpandida td {
     padding: 0 ;
-    background: #080b09;
+    background: var(--bp-sidebar);
 }
 
 .vazio {
     height: 180px;
-    color: #69716c !important;
+    color: var(--bp-muted) !important;
     text-align: center !important;
 }
 
 .modal {
-    background: #0d110e !important;
-    border: 1px solid #252c27 !important;
-    color: #fff !important;
+    background: var(--bp-surface) !important;
+    border: 1px solid var(--bp-border) !important;
+    color: var(--bp-text) !important;
 }
 
 .modalHeader,
 .modalFooter {
-    border-color: #1b211c !important;
+    border-color: var(--bp-border) !important;
 }
 
 .modalBody {
     padding: 25px !important;
-    color: #a4aba6;
+    color: var(--bp-muted);
 }
 
 .modalBody strong {
-    color: #fff;
+    color: var(--bp-text);
 }
 
 @media (max-width: 800px) {
@@ -268,4 +269,72 @@
     .acoes {
         gap: 7px;
     }
+}
+.tabela table {
+    --bs-table-bg: var(--bp-surface);
+    --bs-table-color: var(--bp-text);
+    --bs-table-border-color: var(--bp-border);
+    --bs-table-hover-bg: var(--bp-sidebar);
+    --bs-table-hover-color: var(--bp-text);
+}
+
+.tabela td.produto {
+    color: var(--bp-text) !important;
+}
+
+.tabela td.valor {
+    color: var(--bp-price) !important;
+}
+
+.tabela .linhaExpandida td {
+    background-color: var(--bp-sidebar) !important;
+}
+
+.deletar:focus-visible svg,
+.deletar:active svg {
+    color: var(--bp-danger);
+}
+
+/* Bootstrap modal content is rendered in a portal, outside the page container. */
+.modal {
+    --bs-modal-bg: var(--bp-surface);
+    --bs-modal-color: var(--bp-text);
+    --bs-modal-border-color: var(--bp-border);
+}
+
+.modalHeader :global(.btn-close) {
+    --bs-btn-close-white-filter: none;
+    filter: none;
+}
+
+.modalFooter :global(.btn-secondary) {
+    --bs-btn-color: var(--bp-text);
+    --bs-btn-bg: var(--bp-sidebar);
+    --bs-btn-border-color: var(--bp-border);
+    --bs-btn-hover-color: var(--bp-text);
+    --bs-btn-hover-bg: var(--bp-sidebar);
+    --bs-btn-hover-border-color: var(--bp-accent-text);
+    --bs-btn-active-color: var(--bp-text);
+    --bs-btn-active-bg: var(--bp-sidebar);
+    --bs-btn-active-border-color: var(--bp-accent-text);
+    --bs-btn-disabled-color: var(--bp-muted);
+    --bs-btn-disabled-bg: var(--bp-sidebar);
+    --bs-btn-disabled-border-color: var(--bp-border);
+    --bs-btn-focus-shadow-rgb: 31, 111, 61;
+}
+
+.modalFooter :global(.btn-danger) {
+    --bs-btn-color: #FFFFFF;
+    --bs-btn-bg: var(--bp-danger);
+    --bs-btn-border-color: var(--bp-danger);
+    --bs-btn-hover-color: #FFFFFF;
+    --bs-btn-hover-bg: #8F1C13;
+    --bs-btn-hover-border-color: #8F1C13;
+    --bs-btn-active-color: #FFFFFF;
+    --bs-btn-active-bg: #8F1C13;
+    --bs-btn-active-border-color: #8F1C13;
+    --bs-btn-disabled-color: #FFFFFF;
+    --bs-btn-disabled-bg: var(--bp-danger);
+    --bs-btn-disabled-border-color: var(--bp-danger);
+    --bs-btn-focus-shadow-rgb: 180, 35, 24;
 }
